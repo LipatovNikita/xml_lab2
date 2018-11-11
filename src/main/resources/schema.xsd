@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="localhost/labs/shema"
+        xmlns:tns="localhost/labs/shema"
+        elementFormDefault="qualified"
+>
+
+   <xsd:element name="businessEntityList" type="tns:BusinessEntityList"/>
+
+   <xsd:complexType name="BusinessEntityList">
+      <xsd:annotation>
+         <xsd:documentation>Cписок ХС</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="businessEntity" type="tns:BusinessEntity" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="count" type="xsd:integer"/>
+   </xsd:complexType>
+
+   <xsd:complexType name="BusinessEntity">
+      <xsd:annotation>
+         <xsd:documentation>ХС - лицо, осуществляющее производственную деятельность</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:GenericEntity">
+            <xsd:sequence>
+               <xsd:element name="businessEntityName" type="tns:String255"/>
+               <xsd:element name="businessEntityRegistryStatus" type="tns:BusinessEntityRegistryStatus"/>
+               <xsd:element name="codeOkvedList" type="tns:CodeOkvedList"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="CodeOkvedList">
+      <xsd:annotation>
+         <xsd:documentation>Cписок кодов ОКВЭД</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="codeOkved" type="tns:CodeOkved" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="CodeOkved">
+      <xsd:annotation>
+         <xsd:documentation>Общероссийский классификатор видов экономической деятельности</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="tns:GenericEntity">
+            <xsd:choice>
+               <xsd:element name="code" type="xsd:string"/>
+               <xsd:element name="name" type="xsd:string"/>
+            </xsd:choice>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="GenericEntity">
+      <xsd:annotation>
+         <xsd:documentation>Базовый тип</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="id" type="tns:ID">
+            <xsd:annotation>
+               <xsd:documentation>Идентификатор сущности</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="status" type="xsd:integer">
+            <xsd:annotation>
+               <xsd:documentation>Статус объекта</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="createDate" type="xsd:dateTime">
+            <xsd:annotation>
+               <xsd:documentation>Дата создания записи</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:simpleType name="ID">
+      <xsd:annotation>
+         <xsd:documentation>Уникальный идентификатор</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="String255">
+      <xsd:annotation>
+         <xsd:documentation>Строка с ограничением длины в 255 символов</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:maxLength value="255"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+
+   <xsd:simpleType name="BusinessEntityRegistryStatus">
+      <xsd:annotation>
+         <xsd:documentation>Статус записи реестра ХС</xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="NEW"/>
+         <xsd:enumeration value="VERIFIED"/>
+         <xsd:enumeration value="DELETED"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+</xsd:schema>

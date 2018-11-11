@@ -26,11 +26,11 @@ public class FileResolver {
             Document document = createSimpleResultHtmlFile();
             Element table = appendTableToResultHtmlPage(document);
             appendInfoToTable(businessEntities, table);
-
+            appendFooterToTable(businessEntities, table);
             FileUtils.writeStringToFile(htmlFile, document.outerHtml(), "UTF-8");
          }
       } catch (IOException exception) {
-         exception.printStackTrace();
+         System.err.println(exception.getMessage());
       }
    }
 
@@ -50,6 +50,7 @@ public class FileResolver {
       tableTitles.appendElement("th").appendText("Статус в реестре");
       tableTitles.appendElement("th").appendText("Дата создания");
       tableTitles.appendElement("th").appendText("Коды ОКВЭД");
+      tableTitles.appendElement("th").appendText("Синхронизация с ФНС");
       return table;
    }
 
@@ -63,6 +64,7 @@ public class FileResolver {
          tableRow.appendElement("th").appendText(businessEntity.getRegistryStatus().toString());
          tableRow.appendElement("th").appendText(new SimpleDateFormat("yyyy-M-d H:m").format(businessEntity.getCreateDate()));
          tableRow.appendElement("th").appendText(businessEntity.getCodeOkvedList().isEmpty() ? "Нет записей" : getCodesOkvedFromEntity(businessEntity));
+         tableRow.appendElement("th").appendText(businessEntity.getStatus() == 230 ? "Есть" : "Нет");
       });
    }
 
@@ -72,5 +74,12 @@ public class FileResolver {
          stringBuilder.append(String.format("%s; ", codeOkved.getCode()));
       });
       return stringBuilder.toString();
+   }
+
+   private void appendFooterToTable(List<BusinessEntity> businessEntities, Element table) {
+      Element tableFooter = table.appendElement("tfoot");
+      Element tableTrFooter = tableFooter.appendElement("tr");
+      tableTrFooter.appendElement("td").appendText("Итого:");
+      tableTrFooter.appendElement("td").appendText(String.valueOf(businessEntities.size())).attr("colspan", "6");
    }
 }

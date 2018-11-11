@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<businessEntityList count="2">
+<businessEntityList count="2" xmlns="localhost/labs/shema">
    <businessEntity>
       <id>ece882ce-e777-4bd3-80d7-4309ed70852f</id>
       <status>100</status>
+      <createDate>2018-11-04T10:00:00</createDate>
       <businessEntityName>ИП Иванов И.И.</businessEntityName>
       <businessEntityRegistryStatus>NEW</businessEntityRegistryStatus>
-      <createDate>2018-11-04 10:00</createDate>
       <codeOkvedList>
          <codeOkved>
             <id>12са9264-2735-4955-a636-db70dfv42c56</id>
             <status>100</status>
+            <createDate>2018-11-04T10:00:00</createDate>
             <code>03.1</code>
-            <createDate>2018-11-04 10:00</createDate>
          </codeOkved>
       </codeOkvedList>
    </businessEntity>
    <businessEntity>
       <id>c18cf466-0890-4c24-b7ea-09c3cc5200c1</id>
-      <status>200</status>
+      <status>230</status>
+      <createDate>2018-11-10T21:30:00</createDate>
       <businessEntityName>ООО "XML"</businessEntityName>
       <businessEntityRegistryStatus>VERIFIED</businessEntityRegistryStatus>
-      <createDate>2018-11-10 21:30</createDate>
       <codeOkvedList>
          <codeOkved>
             <id>1f10b65b-1118-44ef-a23b-308d1bce7882</id>
             <status>100</status>
+            <createDate>2018-11-10T21:30:00</createDate>
             <code>10.12.1</code>
-            <createDate>2018-11-10 21:30</createDate>
          </codeOkved>
          <codeOkved>
             <id>d6d59e69-b86d-4b23-901f-0d9329c604da</id>
             <status>100</status>
+            <createDate>2018-11-10T21:30:00</createDate>
             <code>10.11.5</code>
-            <createDate>2018-11-10 21:30</createDate>
          </codeOkved>
       </codeOkvedList>
    </businessEntity>

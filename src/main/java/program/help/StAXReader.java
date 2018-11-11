@@ -44,7 +44,9 @@ public class StAXReader {
                   break;
                case XMLStreamConstants.START_ELEMENT:
                   level++;
-                  if (xmlEvent.asStartElement().getName().toString().equals("businessEntity")) {
+                  String elementName = xmlEvent.asStartElement().getName().toString();
+                  elementName = elementName.substring(elementName.indexOf('}') + 1, elementName.length());
+                  if (elementName.equals("businessEntity")) {
                      /* Опускаемся ниже в иерархии XML-документа, а именно на уровень с отдельными элементами списка */
                      BusinessEntity businessEntity = readBusinessEntityFromFile(xmlEventReader);
                      businessEntities.add(businessEntity);
@@ -61,7 +63,8 @@ public class StAXReader {
             xmlEventReader.nextEvent();
          } while (level > 1);
       } catch (Exception exception) {
-         exception.printStackTrace();
+         System.err.println("Error during parse XML");
+         System.err.println(exception.getMessage());
       }
       return businessEntities;
    }
@@ -76,7 +79,9 @@ public class StAXReader {
          switch (xmlEvent.getEventType()) {
             case XMLStreamConstants.START_ELEMENT:
                level++;
-               switch (xmlEvent.asStartElement().getName().toString()) {
+               String elementName = xmlEvent.asStartElement().getName().toString();
+               elementName = elementName.substring(elementName.indexOf('}') + 1, elementName.length());
+               switch (elementName) {
                   case "id":
                      xmlEventReader.nextEvent();
                      XMLEvent xmlIdEvent = xmlEventReader.nextEvent();
@@ -104,7 +109,7 @@ public class StAXReader {
                   case "createDate":
                      xmlEventReader.nextEvent();
                      XMLEvent xmlDateEvent = xmlEventReader.nextEvent();
-                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d H:m");
+                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d'T'H:m");
                      businessEntity.setCreateDate(dateFormat.parse(xmlDateEvent.asCharacters().getData()));
                      level--;
                      break;
@@ -135,7 +140,9 @@ public class StAXReader {
          switch (xmlEvent.getEventType()) {
             case XMLStreamConstants.START_ELEMENT:
                level++;
-               switch (xmlEvent.asStartElement().getName().toString()) {
+               String elementName = xmlEvent.asStartElement().getName().toString();
+               elementName = elementName.substring(elementName.indexOf('}') + 1, elementName.length());
+               switch (elementName) {
                   case "id":
                      xmlEventReader.nextEvent();
                      XMLEvent xmlIdEvent = xmlEventReader.nextEvent();
@@ -157,7 +164,7 @@ public class StAXReader {
                   case "createDate":
                      xmlEventReader.nextEvent();
                      XMLEvent xmlDateEvent = xmlEventReader.nextEvent();
-                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d H:m");
+                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d'T'H:m");
                      codeOkved.setCreateDate(dateFormat.parse(xmlDateEvent.asCharacters().getData()));
                      level--;
                      break;
